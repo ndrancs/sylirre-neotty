@@ -1,7 +1,6 @@
 name: Application
 on:
   workflow_dispatch:
-on:
   push:
     tags:
       - '*'
