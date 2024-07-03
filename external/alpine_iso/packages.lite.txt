@@ -90,7 +90,6 @@ kbd-bkeymaps
 kmod
 kmod-doc
 kmod-libs
-kmod-openrc
 lddtree
 less
 less-doc
