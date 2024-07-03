@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        abi: [arm64-v8a, armeabi-v7a, x86, x86_64]
+        abi: [arm64-v8a, x86_64]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -98,8 +98,6 @@ jobs:
 
           case "${{ matrix.abi }}" in
             arm64-v8a) arch=aarch64;;
-            armeabi-v7a) arch=arm;;
-            x86) arch=i686;;
             x86_64) arch=x86_64;;
             *) echo "Unknown ABI: ${{ matrix.abi }}"; exit 1;;
           esac
@@ -131,18 +129,6 @@ jobs:
           path: ./external/libqemu-jni/jniLibs/arm64-v8a/libqemu-jni.so
           key: libqemu-jni--arm64-v8a--${{ hashFiles('./external/libqemu-jni/**', '!./external/libqemu-jni/jniLibs/**', '!./external/libqemu-jni/**.md') }}
 
-      - name: Get cached libqemu-jni.so (armeabi-v7a)
-        uses: actions/cache@v3
-        with:
-          path: ./external/libqemu-jni/jniLibs/armeabi-v7a/libqemu-jni.so
-          key: libqemu-jni--armeabi-v7a--${{ hashFiles('./external/libqemu-jni/**', '!./external/libqemu-jni/jniLibs/**', '!./external/libqemu-jni/**.md') }}
-
-      - name: Get cached libqemu-jni.so (x86)
-        uses: actions/cache@v3
-        with:
-          path: ./external/libqemu-jni/jniLibs/x86/libqemu-jni.so
-          key: libqemu-jni--x86--${{ hashFiles('./external/libqemu-jni/**', '!./external/libqemu-jni/jniLibs/**', '!./external/libqemu-jni/**.md') }}
-
       - name: Get cached libqemu-jni.so (x86_64)
         uses: actions/cache@v3
         with:
@@ -158,7 +144,7 @@ jobs:
           fi
 
           # Detect missing JNI libraries.
-          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+          for abi in arm64-v8a x86_64; do
             if [ ! -f "./external/libqemu-jni/jniLibs/${abi}/libqemu-jni.so" ]; then
               echo "Missing ./external/libqemu-jni/jniLibs/${abi}/libqemu-jni.so"
               exit 1

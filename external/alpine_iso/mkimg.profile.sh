@@ -329,5 +329,5 @@ profile_base() {
 
 	hostname="neotty"
 	apkovl="genapkovl.sh"
-	apks="$(grep -E '^[[:space:]]*[A-Za-z0-9]' ./packages.txt)"
+	apks="$(grep -E '^[[:space:]]*[A-Za-z0-9]' ./packages.lite.txt)"
 }
