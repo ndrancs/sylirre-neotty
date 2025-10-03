@@ -8,7 +8,7 @@ on:
 jobs:
   gradle-wrapper-check:
     name: Validate Gradle wrapper
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
   terminal-tests:
     name: Run unit tests for terminal emulator
     needs: gradle-wrapper-check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
 
   system-image:
     name: Build bootable ISO
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -67,7 +67,7 @@ jobs:
 
   libqemu-jni:
     name: Build QEMU
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         abi: [arm64-v8a, x86_64]
@@ -106,7 +106,7 @@ jobs:
   app:
     name: Build application
     needs: [libqemu-jni, system-image, terminal-tests]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
