@@ -59,9 +59,7 @@ jobs:
       - name: Build Alpine Linux ISO
         if: ${{ steps.iso-cache.outputs.cache-hit != 'true' }}
         run: |
-          cd ./external/alpine_iso
-          [ -z "$RSA_KEY_PASSPHRASE" ] && export RSA_KEY_PASSPHRASE=pass
-          make build-docker OUTPUT_DIR=$(realpath ../../app/src/main/assets)
+          wget -O ./app/src/main/assets/system.iso https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-virt-3.23.0-x86_64.iso
         env:
           RSA_KEY_PASSPHRASE: ${{ secrets.ABUILD_KEY_PASSPHRASE }}
 
