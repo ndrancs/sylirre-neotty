@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Validation
         uses: gradle/wrapper-validation-action@v1
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Testing terminal emulator library
         run: ./gradlew test
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Abuild key
         run: |
@@ -77,7 +77,7 @@ jobs:
         abi: [arm64-v8a, x86_64]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache artifacts
         id: libqemu-jni-cache
@@ -115,7 +115,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Get build id
         id: build-id
@@ -189,19 +189,15 @@ jobs:
          TAG="manual-${TIMESTAMP}"
          echo "Creating manual release with tag: $TAG"
          fi
-    
-
          RELEASE_APK=$(find ./artifacts/apk -name "NeoTTY-*-release.apk" | head -1)
-    
          if [ -z "$RELEASE_APK" ]; then
          echo "Error: No release APK found in artifacts/apk/"
          exit 1
          fi
-    
          echo "Publishing release with APK: $RELEASE_APK"
          gh release create "${TAG}" \
          --title "Release ${TAG}" \
          --notes "Automated release created on $(date)" \
          "$RELEASE_APK"
-    env:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
