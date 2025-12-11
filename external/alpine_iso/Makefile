@@ -30,6 +30,8 @@ build-local:
 	@echo "Building extra packages..."
 	@echo
 	mkdir -p $(CURRENT_DIR)/packages
+    cd $(CURRENT_DIR)/extras/ruby-net-imap; abuild -r -P $(CURRENT_DIR)/packages
+	cd $(CURRENT_DIR)/extras/ruby-rbs; abuild -r -P $(CURRENT_DIR)/packages
 	cd $(CURRENT_DIR)
 	@echo "Building ISO..."
 	@echo "Output directory:" $(OUTPUT_DIR)
