@@ -135,22 +135,12 @@ jobs:
           done
 
           mkdir -p ./artifacts
-
-          if [ "${{ startsWith(github.ref, 'refs/tags/') }}" = "true" ]; then
-            ./gradlew assembleRelease
-            mkdir -p ./artifacts/apk
-            mv ./app/build/outputs/apk/release/* ./artifacts/apk/
-            ./gradlew bundleRelease
-            mkdir -p ./artifacts/bundle
-            mv ./app/build/outputs/bundle/release/* ./artifacts/bundle/
-          else
-            if [ -n "$KEY_PASSPHRASE" ]; then
-              sed -i -E 's|//(signingConfig signingConfigs.release)|\1|g' ./app/build.gradle
-            fi
-            ./gradlew assembleDebug
-            mkdir -p ./artifacts/apk
-            mv ./app/build/outputs/apk/debug/* ./artifacts/apk/
-          fi
+          ./gradlew assembleRelease
+          mkdir -p ./artifacts/apk
+          mv ./app/build/outputs/apk/release/* ./artifacts/apk/
+          ./gradlew bundleRelease
+          mkdir -p ./artifacts/bundle
+          mv ./app/build/outputs/bundle/release/* ./artifacts/bundle/
         env:
           KEY_PASSPHRASE: "${{ secrets.ANDROID_KEY_PASSPHRASE }}"
 
